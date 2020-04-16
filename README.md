@@ -1,6 +1,6 @@
 # sagyoipu
 
-![Screenshot](https://user-images.githubusercontent.com/1413408/79339945-9dda2d80-7f64-11ea-8ea2-65dd7745e276.png)
+<img alt="スクリーンショット" src="https://user-images.githubusercontent.com/1413408/79405863-7c169000-7fd0-11ea-9461-669742b244a6.png">
 
 ## sagyoipu-client
 
