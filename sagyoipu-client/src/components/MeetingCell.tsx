@@ -1,5 +1,6 @@
+/** @jsx jsx */
 import * as React from "react";
-import { css } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 import { Meeting, Participant } from "~types/Meeting";
 import ZoomLogoImage from "../images/zoomus_logo.png";
 import PersonImage from "../images/person.png";
@@ -122,23 +123,25 @@ const joinButtonStyle = css`
   }
 `;
 
-const ZoomLogo = () => <div className={zoomLogoStyle}></div>;
+const ZoomLogo = () => <div css={zoomLogoStyle}></div>;
 
 const Person: React.FC<{ participant: Participant }> = props => (
   <Tooltip content={props.participant.user_name} position={Position.TOP}>
-    <div className={personStyle}></div>
+    <div css={personStyle}></div>
   </Tooltip>
 );
 
-const PersonMore: React.FC<{ participants: Participant[] }> = props => (
+const PersonMore: React.FC<{ participants: Participant[] }> = ({
+  participants,
+}) => (
   <Tooltip
-    content={props.participants.map(p => p.user_name).join(", ")}
+    content={participants.map(p => p.user_name).join(", ")}
     position={Position.TOP}
   >
-    <div className={personStyle}>
-      <div
-        className={personOverlayStyle}
-      >{`+${props.participants.length}`}</div>
+    <div css={personStyle}>
+      {participants.length > 1 && (
+        <div css={personOverlayStyle}>{`+${participants.length}`}</div>
+      )}
     </div>
   </Tooltip>
 );
@@ -147,7 +150,7 @@ const JoinButton: React.FC<{ joinMeetingURL: string }> = ({
   joinMeetingURL,
 }) => (
   <a target="_blank" rel="noopener noreferrer" href={joinMeetingURL}>
-    <div className={joinButtonStyle}>Join</div>
+    <div css={joinButtonStyle}>Join</div>
   </a>
 );
 
@@ -161,12 +164,12 @@ export const MeetingCell: React.FC<MeetingCellProps> = ({
   const restParticipants = participants.slice(5);
 
   return (
-    <div className={containerStyle}>
-      <div className={firstSectionStyle}>
+    <div css={containerStyle}>
+      <div css={firstSectionStyle}>
         <ZoomLogo />
         <div>
-          <div className={headerTextStyle}>Zoom meeting</div>
-          <div className={headerSubTextStyle}>
+          <div css={headerTextStyle}>Zoom meeting</div>
+          <div css={headerSubTextStyle}>
             {meeting.participants.length > 0
               ? `Last updated at ${format(
                   parseISO(meeting.participants[0].join_time),
@@ -176,14 +179,11 @@ export const MeetingCell: React.FC<MeetingCellProps> = ({
           </div>
         </div>
       </div>
-      <div className={secondSectionStyle}>
-        {`Meeting ID: ${meeting.id.replace(
-          /(\d{3})(\d{3})(\d{3})/,
-          "$1-$2-$3",
-        )}`}
+      <div css={secondSectionStyle}>
+        {`Meeting ID: ${meeting.id.replace(/(\d{3})(\d{3})(\d+)/, "$1-$2-$3")}`}
       </div>
-      <div className={thirdSectionStyle}>
-        <div className={personsStyle}>
+      <div css={thirdSectionStyle}>
+        <div css={personsStyle}>
           {firstFourParticipants.map(p => (
             <Person key={p.user_id} participant={p} />
           ))}

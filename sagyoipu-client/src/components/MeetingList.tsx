@@ -1,7 +1,8 @@
+/** @jsx jsx */
 import * as React from "react";
 import { Meeting } from "~types/Meeting";
 import { MeetingCell } from "./MeetingCell";
-import { css } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 
 export interface MeetingListProps {
   meetings: Meeting[];
@@ -20,7 +21,7 @@ export const MeetingList: React.FC<MeetingListProps> = ({
   joinMeetingURL,
 }) => {
   return (
-    <div className={containerStyle}>
+    <div css={containerStyle}>
       {meetings.map(meeting => (
         <MeetingCell
           key={meeting.id}
